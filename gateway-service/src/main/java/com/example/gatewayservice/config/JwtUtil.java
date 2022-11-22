@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-
     @Value("${jwt.secret}")
     private String secret;
 
@@ -25,10 +24,10 @@ public class JwtUtil {
 
     public Claims getAllClaimsFromToken(String token){
         System.out.println("Token: " + token);
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public boolean isTokenExpired(String token){
+    private boolean isTokenExpired(String token){
         return this.getAllClaimsFromToken(token).getExpiration().before(new Date());
     }
 
